@@ -1,0 +1,12 @@
+#!/usr/local/bin/ruby
+
+require 'bcrypt'
+require 'io/console'
+
+BCrypt::Engine.cost = 10
+
+if ARGV[0] == 'encrypt'
+  puts "Please enter the password (will not echo):"
+  password = STDIN.noecho(&:gets).strip
+  puts BCrypt::Password.create(password)
+end
