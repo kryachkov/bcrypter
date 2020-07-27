@@ -7,9 +7,30 @@
   </head>
   <body>
     <h1 style='color: red'><%= message %></h1>
-    <form action="/generate" method="post">
+
+    <h2>ElasticSearch/Kibana</h2>
+    <form action="/bcrypt/generate" method="post">
       <div>
-        <label for="password">Password:</label>
+        <label for="password">Password (8 chars min):</label>
+        <input type="password" name="password" id="password" value="">
+      </div>
+      <div>
+        <label for="password_confirmation">Password again:</label>
+        <input type="password" name="password_confirmation" id="password_confirmation" value="">
+      </div>
+      <div>
+        <input type="submit" name="submit" id="" value="Generate">
+      </div>
+    </form>
+
+    <h2>Postgresql</h2>
+    <form action="/md5/generate" method="post">
+      <div>
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username" value="">
+      </div>
+      <div>
+        <label for="password">Password (8 chars min):</label>
         <input type="password" name="password" id="password" value="">
       </div>
       <div>

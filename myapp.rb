@@ -1,5 +1,6 @@
 require 'sinatra'
 require 'bcrypt'
+require 'digest'
 
 BCrypt::Engine.cost = ENV.fetch('BCRYPT_COST', 10)
 
@@ -32,7 +33,7 @@ get '/' do
   erb :index
 end
 
-post '/generate' do
+post '/bcrypt/generate' do
   password = params['password'].to_s
   confirmation = params['password_confirmation'].to_s
 
@@ -41,6 +42,21 @@ post '/generate' do
   if validator.valid?
     hash = BCrypt::Password.create(password)
     erb :generate_success, locals: { hash: hash }
+  else
+    erb :generate_failed, locals: { message: validator.error_message }
+  end
+end
+
+post '/md5/generate' do
+  username = params['username'].to_s
+  password = params['password'].to_s
+  confirmation = params['password_confirmation'].to_s
+
+  validator = PasswordValidator.new(password, confirmation)
+
+  if validator.valid?
+    hash = Digest::MD5.hexdigest(password + username)
+    erb :generate_success, locals: { hash: 'md5' + hash }
   else
     erb :generate_failed, locals: { message: validator.error_message }
   end
